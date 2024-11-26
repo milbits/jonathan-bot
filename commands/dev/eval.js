@@ -1,5 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("discord.js");
+require("dotenv").config();
+
 module.exports = {
 	name: "eval",
 	category: "Dev",
@@ -8,7 +10,7 @@ module.exports = {
 		.setDescription("dev-only command")
 		.addStringOption((option) => option.setName("script").setDescription("the javascript").setRequired(true)),
 	async execute(client, interaction) {
-		if (interaction.user.id != "525379333951324190") return;
+		if (interaction.user.id != `${process.env.OWNER}`) return;
 		var evaluation = eval(interaction.options.getString("script"));
 		evaluation;
 		interaction.reply({
