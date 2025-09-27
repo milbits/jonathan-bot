@@ -2,12 +2,10 @@ const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const cooldowns = new Map();
 const Discord = require("discord.js");
 const { StringSelectMenuBuilder, EmbedBuilder } = require("discord.js");
-const { useHistory } = require("discord-player");
 const wait = require("util").promisify(setTimeout);
-const { useQueue, QueueRepeatMode } = require("discord-player");
+const { useMainPlayer } = require("discord-player");
 
 module.exports = async (client, interaction) => {
-
 	// Autocomplete
 	if (interaction.isAutocomplete()) {
 		let command = interaction.client.commands.get(interaction.commandName);
@@ -70,9 +68,15 @@ module.exports = async (client, interaction) => {
 		}
 
 		timeStamp.set(interaction.user.id, now);
-		cooldowns.set(command.name, timeStamp);
+		cooldowns.set(command.name, timeStamp);		
+		const player = useMainPlayer(); 
+
 		try {
-			await command.execute(client, interaction);
+			const data = {
+				guild: interaction.guild,
+			};
+
+			await player.context.provide(data, () => command.execute(client, interaction));
 		} catch (error) {
 			console.error(error);
 			interaction

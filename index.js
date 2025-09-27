@@ -4,6 +4,7 @@ const { Player } = require("discord-player");
 require("dotenv").config();
 const { EmbedBuilder } = require("discord.js");
 const { Options } = require("discord.js");
+const { DefaultExtractors } = require("@discord-player/extractor");
 const { YoutubeiExtractor } = require("discord-player-youtubei");
 
 const client = new Client({
@@ -27,13 +28,18 @@ const client = new Client({
 		InviteManager: 0,
 	}),
 });
-const player = Player.singleton(client, {});
+const player = new Player(client, {
+	ytdlOptions: { dlChunkSize: 0, filter: "audioonly", quality: "highestaudio" },
+});
+player.extractors.loadMulti(DefaultExtractors);
+player.extractors.register(YoutubeiExtractor, {
+    // cookie: process.env.YT_COOKIE,
+    // generateWithPoToken: true,
+});
 
 exports.client = client;
 client.login(process.env.TOKEN);
 require("./config/moyaiuConfig")(client, Player, Discord); // config
-player.extractors.loadDefault((ext) => ext !== "YouTubeExtractor");
-player.extractors.register(YoutubeiExtractor, {});
 
 const { ButtonBuilder } = require("discord.js");
 const { ActionRowBuilder } = require("discord.js");
@@ -61,10 +67,9 @@ player.events.on("playerStart", (queue, track) => {
 	//.setColor(`${queue.metadata.interaction.member.displayHexColor}`);
 	queue.metadata.interaction.channel.send({ embeds: [embed], components: [musicButtonRow] });
 });
-player.events.on("playerError", (error) => {
-	console.log(error);
-});
-
+  player.events.on('debug', (queue, message) =>
+    console.log(`[DEBUG ${queue.guild.id}] ${message}`),
+  ); 
 require("./error");
 //* Filters
 require("./filters");

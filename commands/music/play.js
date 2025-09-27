@@ -1,5 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { useMainPlayer, useQueue } = require("discord-player");
+const { YoutubeiExtractor } = require("discord-player-youtubei");
+	const player = useMainPlayer();
+
 module.exports = {
 	name: "play",
 	category: "Music",
@@ -8,10 +11,9 @@ module.exports = {
 		.setDescription("play a song")
 		.addStringOption((option) => option.setName("song").setDescription("A url or title").setAutocomplete(true).setRequired(true)),
 	async autocomplete(client, interaction) {
-		const player = useMainPlayer();
 
 		const query = interaction.options.getString("song", true);
-		const searchResults = await player.search(query, { searchEngine: "youtubeSearch" });
+		const searchResults = await player.search(query);
 
 		let response = [];
 
@@ -34,7 +36,6 @@ module.exports = {
 		if (!interaction.member.voice.channel) return interaction.reply({ content: `go join a vc first`, ephemeral: true });
 
 		// music
-		const player = useMainPlayer(); // Get the player instance that we created earlier
 
 		await interaction.deferReply();
 
@@ -54,7 +55,7 @@ module.exports = {
 			var queryType = "auto";
 		} else {
 			if (!queryType) {
-				queryType = "youtubeSearch";
+				queryType = `ext:${YoutubeiExtractor.identifier}`;
 			}
 		}
 		const searchResult = await player.search(query, {
@@ -70,10 +71,6 @@ module.exports = {
 		var embed = new EmbedBuilder().setTitle("Play").setColor("DarkGreen");
 		try {
 			await player.play(channel, track, {
-				ytdlOptions: {
-					quality: "highestaudio",
-					highWaterMark: 1 << 27,
-				},
 				nodeOptions: {
 					leaveOnEmpty: true,
 					leaveOnEmptyCooldown: 300000,
@@ -96,8 +93,6 @@ module.exports = {
 				],
 			});
 		} catch (error) {
-			const queue = useQueue(interaction.guild.id);
-
 			embed.setTitle("stupid error").setDescription(`Logs:\n \`\`\`js\n${error}\`\`\``).setColor("Red");
 
 			await interaction.editReply({ embeds: [embed] });

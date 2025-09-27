@@ -1,11 +1,5 @@
 const { Collection } = require("discord.js");
 module.exports = function (client, Player) {
-	client.player = new Player(client, {
-		ytdlOptions: {
-			filter: "audioonly",
-			quality: "highestaudio",
-		},
-	});
 
 	client.config = require("../config/config");
 	client.commands = new Collection();
