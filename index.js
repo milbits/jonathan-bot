@@ -33,8 +33,15 @@ const player = new Player(client, {
 });
 player.extractors.loadMulti(DefaultExtractors);
 player.extractors.register(YoutubeiExtractor, {
-    // cookie: process.env.YT_COOKIE,
-    // generateWithPoToken: true,
+	streamOptions: {
+		useClient: "WEB_EMBEDDED",
+	},
+	generateWithPoToken: true,
+	innertubeConfigRaw: {
+		player_id: "0004de42",
+	},
+	// cookie: process.env.YT_COOKIE,
+	// generateWithPoToken: true,
 });
 
 exports.client = client;
@@ -67,9 +74,7 @@ player.events.on("playerStart", (queue, track) => {
 	//.setColor(`${queue.metadata.interaction.member.displayHexColor}`);
 	queue.metadata.interaction.channel.send({ embeds: [embed], components: [musicButtonRow] });
 });
-  player.events.on('debug', (queue, message) =>
-    console.log(`[DEBUG ${queue.guild.id}] ${message}`),
-  ); 
+player.events.on("debug", (queue, message) => console.log(`[DEBUG ${queue.guild.id}] ${message}`));
 require("./error");
 //* Filters
 require("./filters");

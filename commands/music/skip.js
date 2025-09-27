@@ -8,7 +8,7 @@ module.exports = {
 	category: "Music",
 	data: new SlashCommandBuilder().setName("skip").setDescription("Skip to the next song"),
 	execute(client, interaction) {
-		const queue = useQueue(interaction.guild.id);
+		const queue = useQueue();
 
 		if (!interaction.member.voice.channel) return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
 

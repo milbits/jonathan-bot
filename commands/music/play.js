@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { useMainPlayer, useQueue } = require("discord-player");
-const { YoutubeiExtractor } = require("discord-player-youtubei");
-	const player = useMainPlayer();
+const { useMainPlayer } = require("discord-player");
+const player = useMainPlayer();
 
 module.exports = {
 	name: "play",
@@ -11,7 +10,6 @@ module.exports = {
 		.setDescription("play a song")
 		.addStringOption((option) => option.setName("song").setDescription("A url or title").setAutocomplete(true).setRequired(true)),
 	async autocomplete(client, interaction) {
-
 		const query = interaction.options.getString("song", true);
 		const searchResults = await player.search(query);
 
@@ -51,13 +49,8 @@ module.exports = {
 				return false;
 			}
 		};
-		if (isValidUrl(query)) {
-			var queryType = "auto";
-		} else {
-			if (!queryType) {
-				queryType = `ext:${YoutubeiExtractor.identifier}`;
-			}
-		}
+		var queryType = "auto";
+
 		const searchResult = await player.search(query, {
 			// Force youtube search
 			requestedBy: interaction.member,

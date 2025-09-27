@@ -9,7 +9,7 @@ module.exports = {
 		.setDescription("Changes the volume")
 		.addIntegerOption((option) => option.setName("volume").setDescription("volume").setRequired(true).setMinValue(1).setMaxValue(200)),
 	async execute(client, interaction) {
-		const queue = useQueue(interaction.guild.id);
+		const queue = useQueue();
 
 		if (!interaction.member.voice.channel) return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
 

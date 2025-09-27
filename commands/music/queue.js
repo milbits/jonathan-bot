@@ -7,7 +7,7 @@ module.exports = {
 	category: "Music",
 	data: new SlashCommandBuilder().setName("queue").setDescription("shows the queue"),
 	async execute(client, interaction) {
-		const queue = useQueue(interaction.guild.id);
+		const queue = useQueue();
 
 		let currQueue = queue.tracks.toArray();
 		let queueLength = currQueue.length;

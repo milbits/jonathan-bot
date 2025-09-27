@@ -6,6 +6,7 @@
 		"discord-player-youtubei": "github:retrouser955/discord-player-youtubei",
 		"discord.js": "^14.22.1",
 		"dotenv": "^17.2.2",
+		"googlevideo": "^4.0.4",
 		"parse-duration": "^2.1.4"
 	}
 }
