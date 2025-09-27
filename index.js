@@ -8,13 +8,7 @@ const { DefaultExtractors } = require("@discord-player/extractor");
 const { YoutubeiExtractor } = require("discord-player-youtubei");
 
 const client = new Client({
-	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildVoiceStates,
-		GatewayIntentBits.GuildPresences,
-	],
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
 	FailIfNotExist: false,
 	sweepers: Options.DefaultSweeperSettings,
 	makeCache: Options.cacheWithLimits({
@@ -28,11 +22,10 @@ const client = new Client({
 		InviteManager: 0,
 	}),
 });
-const player = new Player(client, {
-	ytdlOptions: { dlChunkSize: 0, filter: "audioonly", quality: "highestaudio" },
-});
+const player = new Player(client);
 player.extractors.loadMulti(DefaultExtractors);
 player.extractors.register(YoutubeiExtractor, {
+	//fixes playback
 	streamOptions: {
 		useClient: "WEB_EMBEDDED",
 	},
@@ -40,8 +33,8 @@ player.extractors.register(YoutubeiExtractor, {
 	innertubeConfigRaw: {
 		player_id: "0004de42",
 	},
-	// cookie: process.env.YT_COOKIE,
-	// generateWithPoToken: true,
+	//optional
+ 	cookie: process.env.YT_COOKIE
 });
 
 exports.client = client;
@@ -50,6 +43,8 @@ require("./config/moyaiuConfig")(client, Player, Discord); // config
 
 const { ButtonBuilder } = require("discord.js");
 const { ActionRowBuilder } = require("discord.js");
+
+// message whenever a song starts
 
 player.events.on("playerStart", (queue, track) => {
 	let playing = queue.node.isPaused();
@@ -67,14 +62,13 @@ player.events.on("playerStart", (queue, track) => {
 
 	const embed = new EmbedBuilder()
 		.setTitle("Playing Now")
-		.setDescription(`**${track.toHyperlink()}** by **${track.author}**\n Length: ${track.duration}`)
+		.setDescription(`**${track.toHyperlink()}** by **${track.author}**\n-# ${track.duration}`)
 		.setThumbnail(`${track.thumbnail}`)
-		.setColor("Random")
-		.setFooter({ text: `Requested by: ${track.requestedBy.username}`, iconURL: `${track.requestedBy.displayAvatarURL()}` });
-	//.setColor(`${queue.metadata.interaction.member.displayHexColor}`);
+		//	.setColor("Random")
+		.setFooter({ text: `Added by ${track.requestedBy.username}`, iconURL: `${track.requestedBy.displayAvatarURL()}` })
+		.setColor(`${queue.metadata.interaction.member.displayHexColor}`);
 	queue.metadata.interaction.channel.send({ embeds: [embed], components: [musicButtonRow] });
 });
-player.events.on("debug", (queue, message) => console.log(`[DEBUG ${queue.guild.id}] ${message}`));
 require("./error");
 //* Filters
 require("./filters");

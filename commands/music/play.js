@@ -26,7 +26,7 @@ module.exports = {
 		});
 
 		if (!response || response.length === 0) {
-			return interaction.respond([]);
+			return interaction.respond([{ name: "im a mysterious song please notice me :3", value: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }]);
 		}
 		return interaction.respond(response);
 	},
