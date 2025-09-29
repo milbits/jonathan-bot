@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js");
 const { useMainPlayer } = require("discord-player");
-const player = useMainPlayer();
 
 module.exports = {
 	name: "play",
@@ -10,6 +9,8 @@ module.exports = {
 		.setDescription("play a song")
 		.addStringOption((option) => option.setName("song").setDescription("A url or title").setAutocomplete(true).setRequired(true)),
 	async autocomplete(client, interaction) {
+		const player = useMainPlayer();
+
 		const query = interaction.options.getString("song", true);
 		if (!query) return;
 		const searchResults = await player.search(query);
@@ -34,6 +35,8 @@ module.exports = {
 		return interaction.respond(response);
 	},
 	async execute(client, interaction) {
+		const player = useMainPlayer();
+
 		if (!interaction.member.voice.channel) return interaction.reply({ content: `go join a vc first`, ephemeral: true });
 
 		// music
@@ -69,7 +72,6 @@ module.exports = {
 					}, // we can access this metadata object using queue.metadata later
 				},
 			});
-
 
 			return interaction.editReply({
 				embeds: [

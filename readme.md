@@ -9,3 +9,5 @@ ID=<your id here>
 ```
 
 and then do `npm i` or whatever your package manager is (bun on top)
+
+run `node deploy` at the first time (or when you add/change/remove a command), then run node .

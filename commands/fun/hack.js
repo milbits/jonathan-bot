@@ -7,23 +7,31 @@ module.exports = {
 	category: "Fun",
 	cooldown: 10,
 	data: new SlashCommandBuilder()
-		.setName("hack")
-		.setDescription("hack someone")
-		.addStringOption((option) => option.setName("target").setDescription("The target user").setRequired(true)),
+		.setName("doxx")
+		.setDescription("doxx someone")
+		.addStringOption((option) => option.setName("victim").setDescription("the poor innocent soul").setRequired(true)),
 	async execute(client, interaction) {
-		const target = interaction.options.getString("target");
+		const target = interaction.options.getString("victim");
 
 		await interaction.reply("Preparing...");
 		await wait(3000);
 		await interaction.editReply(`Injecting spyware into ${target}'s device...`);
 		await wait(1000);
-		await interaction.editReply("Scrapping private information...");
+		await interaction.editReply("Scraping private information...");
 		await wait(1000);
 		await interaction.editReply("Decrypting data...");
 		await wait(2000);
 		await interaction.editReply(`Sending Data to ${interaction.guild.name}...`);
 		await wait(1000);
-		var nam = ["Adolf", "Adolfus", "Miles", // meeeeee :3
+		// function to randomly select one string from an array
+		function randomizer(array){
+			const i = Math.floor(Math.random() * array.length);
+			return array[i]
+		}
+		var nameList = [
+			"Adolf",
+			"Adolfus",
+			"Miles",
 			"Robert",
 			"Michael",
 			"Chris",
@@ -69,10 +77,12 @@ module.exports = {
 			"Sebastian",
 			"Agent",
 			`${target}`,
-			"Jonathan"
+			"Jonathan",
+			"Shigeru",
+			"Jin",
 		];
-		var name = Math.floor(Math.random() * nam.length);
-		var sur = [
+		var name = randomizer(nameList)
+		var lastNameList = [
 			"Hitler",
 			"Hitlerus",
 			"Morales",
@@ -100,23 +110,28 @@ module.exports = {
 			"Wokeler",
 			"Solace",
 			"Urbanshade",
+			"Joker",
+			"Miyamoto",
+			"Sakai",
 		];
-		var sure = Math.floor(Math.random() * sur.length);
+		var lastName = randomizer(lastNameList)
 		var ip = Math.floor(Math.random() * 255);
 		var ip2 = Math.floor(Math.random() * 254);
 		var ip3 = Math.floor(Math.random() * 253);
 		var ip4 = Math.floor(Math.random() * 252);
-		var number = Math.floor(Math.random() * 99999999999);
-		var num = Math.floor(Math.random() * 420);
-		var pass = [
+		var number = Math.floor(Math.random() * 999999999);
+		var country = Math.floor(Math.random() * 420);
+		var woke = Math.floor(Math.random() * 100);
+		var passwordList = [
 			"fortnite69",
 			"P0RNiSc00lXOXOXOXOXO",
 			`${interaction.options.getString("target")}`,
 			"Password123",
 			"I love m0m",
-			"iloveniggers1274",
-			"sl4vesh0uldbefre3_",
-			`I :heart: ${interaction.member.user.tag}`,
+			"iloveblackmen1274",
+			"sk1b1dy",
+			"mommysbestboy",
+			`${interaction.member.user.tag}sgoodboy6969`,
 			"qwertz",
 			"qwerty",
 			"1234567890",
@@ -130,25 +145,38 @@ module.exports = {
 			"6 characters or more",
 			"penisgohard",
 		];
-		var word = Math.floor(Math.random() * pass.length);
-		const e = [
-			"hi:333@gmail.com",
-			`${interaction.options.getString("target")}@gmail.com`,
-			`official${interaction.options.getString("target")}@gmail.com`,
-			`${interaction.member.user.tag}@gmail.com`,
-			`${nam[name]}@gmail.com`,
-			`${nam[name]}${sur[sure]}@gmail.com`,
-			"imcooluwu@yahoo.ma",
-			"mamaaaaaaaaaaaamaaaaaaaaaaaaaaaaaaaa@mama.mam",
-			`${interaction.options.getString("target")}@gmail.com`,
+		var password = randomizer(passwordList);
+		const user = [
+			"hi:333",
+			`official${target}`,
+			`${interaction.member.user.tag}`,
+			`${name}`,
+			`${name} ${lastName}`,
+			"imcooluwu",
+			"mamaaaaaaaaaaaamaaaaaaaaaaaaaaaaaaaa",
+			`${interaction.options.getString("target")}`,
+			"proudfag",
+			`${target}`,
+			"ShigeruMiyamoto"
 		];
-		const mail = Math.floor(Math.random() * e.length);
+		const domain = [
+			"@gmail.com",
+			"@protonmail.com",
+			"@proton.me",
+			"@icloud.com",
+			"@yahoo.ma",
+			"@lgbt.lol",
+			"@urbanshade.dk",
+			"@nintendo.co.jp"
+		]
+		const emailUser = randomizer(user);
+		const emailDomain = randomizer(domain);
 
 		interaction.editReply({
 			content: "‎",
 			embeds: [
 				new EmbedBuilder()
-					.setTitle(`${interaction.options.getString("target")} was hacked!`)
+					.setTitle(`${interaction.options.getString("target")} got doxxed!`)
 					.setColor("Random")
 					.addFields(
 						{
@@ -157,33 +185,33 @@ module.exports = {
 							inline: true,
 						},
 						{
-							name: "Telephone Number",
-							value: `+${num} ${number}`,
+							name: "Phone Number",
+							value: `+${country} ${number}`,
 							inline: true,
 						},
 						{
 							name: "Full Name",
-							value: `${nam[name]} ${sur[sure]}`,
+							value: `${name} ${lastName}`,
 							inline: true,
 						},
 						{
 							name: "Password",
-							value: `${pass[word]}`,
+							value: `${password}`,
 							inline: true,
 						},
-						{
+						/*{
 							name: "Address",
 							value: `${addr[ess]} Street`,
 							inline: true,
-						},
+						},*/
 						{
 							name: "E-Mail",
-							value: `${e[mail]}`,
+							value: `${emailUser}${emailDomain}`,
 							inline: true,
 						},
 						{
 							name: "WOKEness", // this is a joke; im gay
-							value: `${w[oke]}`,
+							value: `${woke}%`,
 							inline: true,
 						}
 					),
