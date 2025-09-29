@@ -23,10 +23,7 @@ module.exports = {
 		await wait(2000);
 		await interaction.editReply(`Sending Data to ${interaction.guild.name}...`);
 		await wait(1000);
-		var nam = [
-			"Adolf",
-			"Adolfus",
-			"Miles", // meeeeee :3
+		var nam = ["Adolf", "Adolfus", "Miles", // meeeeee :3
 			"Robert",
 			"Michael",
 			"Chris",
@@ -63,7 +60,16 @@ module.exports = {
 			"Link",
 			"Mr.",
 			"Kanye",
-			"Albert"
+			"Albert",
+			"Skibidi",
+			"Diddy",
+			"Mustard",
+			"Epstein",
+			"Jeffrey",
+			"Sebastian",
+			"Agent",
+			`${target}`,
+			"Jonathan"
 		];
 		var name = Math.floor(Math.random() * nam.length);
 		var sur = [
@@ -86,7 +92,14 @@ module.exports = {
 			"Morbius",
 			"Breast",
 			"West",
-			"Einstein"
+			"Einstein",
+			"Honker",
+			"Wonka",
+			"Jeffrey",
+			"Blud",
+			"Wokeler",
+			"Solace",
+			"Urbanshade",
 		];
 		var sure = Math.floor(Math.random() * sur.length);
 		var ip = Math.floor(Math.random() * 255);
@@ -160,12 +173,17 @@ module.exports = {
 						},
 						{
 							name: "Address",
-							value: /*`${addr[ess]} Street`*/ "undefined",
+							value: `${addr[ess]} Street`,
 							inline: true,
 						},
 						{
 							name: "E-Mail",
 							value: `${e[mail]}`,
+							inline: true,
+						},
+						{
+							name: "WOKEness", // this is a joke; im gay
+							value: `${w[oke]}`,
 							inline: true,
 						}
 					),

@@ -28,19 +28,14 @@ module.exports = {
 		const embed = new EmbedBuilder()
 			.setColor("Random")
 			.setAuthor({ name: "Now Playing", url: `${track.url}` })
-			.setTitle(`${track.title}`)
+			.setTitle(`${track.author} - ${track.title}`)
 			.setURL(`${track.url}`)
 			.setThumbnail(`${track.thumbnail}`)
 			.setFooter({
-				text: `Requested by: ${track.requestedBy.username}`,
+				text: `Added by ${track.requestedBy.username}`,
 				iconURL: `${track.requestedBy.displayAvatarURL()}`,
 			})
 			.addFields([
-				{
-					name: "Channel",
-					value: `${track.author}`,
-					inline: true,
-				},
 				{
 					name: "Volume",
 					value: `${queue.node.volume}`,

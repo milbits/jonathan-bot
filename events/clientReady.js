@@ -5,5 +5,5 @@ module.exports = async (client) => {
 	//const guild = client.guilds.cache;
 	//console.log(guild);
 
-	client.user.setActivity(`meow! =3 =3 =3 - use /`, { type: 4 });
+	client.user.setActivity(`woof! =3`, { type: 4 });
 };

@@ -12,9 +12,8 @@ module.exports = {
 		const modBtn = new ButtonBuilder().setLabel("Moderation").setStyle("Secondary").setCustomId("Mod").setEmoji("🛡").setDisabled(false);
 		const miscBtn = new ButtonBuilder().setLabel("Misc").setStyle("Secondary").setCustomId("Misc").setEmoji("❓");
 		const musicBtn = new ButtonBuilder().setLabel("Music").setStyle("Secondary").setCustomId("Music").setEmoji("🎵");
-		const lvlBtn = new ButtonBuilder().setLabel("Coming Soon...").setStyle("Secondary").setCustomId("credit").setDisabled(true);
 
-		const btns1 = new ActionRowBuilder().addComponents([funBtn, modBtn, miscBtn, musicBtn, lvlBtn]);
+		const btns1 = new ActionRowBuilder().addComponents([funBtn, modBtn, miscBtn, musicBtn]);
 		collector.on("collect", async (i) => {
 			if (i.user.id === interaction.user.id) {
 				i.update({

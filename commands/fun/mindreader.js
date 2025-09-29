@@ -16,8 +16,6 @@ module.exports = {
 		await wait(4000);
 		await interaction.editReply("Doing an EEG...");
 		await wait(4000);
-		await interaction.editReply("Using magic like a badass wizard");
-		await wait(2000);
 		await interaction.editReply(`Hiring the CIA to initiate mind control...`);
 		await wait(500);
 		interaction.editReply(`you're thinking of ${interaction.options.getInteger("number")}`);

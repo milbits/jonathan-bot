@@ -7,7 +7,7 @@ module.exports = {
 	cooldown: 15,
 	data: new SlashCommandBuilder()
 		.setName("filter")
-		.setDescription("[EXPERIMENTAL] Toggle music filters! Only one at a time")
+		.setDescription('[EXPERIMENTAL] Use "cool" music effects! Only one at a time')
 		.addStringOption((option) =>
 			option
 				.setName("filter")

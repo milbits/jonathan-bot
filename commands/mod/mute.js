@@ -9,7 +9,7 @@ module.exports = {
 	botPerms: ["MODERATE_MEMBERS"],
 	data: new SlashCommandBuilder()
 		.setName("mute")
-		.setDescription("Timeout/Mute someone with a custom duration!")
+		.setDescription("Timeout someone with a custom duration!")
 		.addUserOption((option) => option.setName("target").setDescription("The target user").setRequired(true))
 		.addStringOption((option) => option.setName("duration").setDescription("The duration of the mute").setRequired(true))
 		.addStringOption((option) => option.setName("reason").setDescription("The reason for the mute").setRequired(false)),
@@ -27,7 +27,7 @@ module.exports = {
 		// if the duration is higher than 28 days
 		if (duration > 2419200000) {
 			interaction.guild.members.cache.get(target.id).timeout(interaction.guild.members.cache.get(target.id).timeout(2419200000, reason).then(console.log).catch(console.error));
-			embed.setDescription(`Muted ${target} for **1 month**`);
+			embed.setDescription(`Muted ${target} for **28 days**`);
 		}
 
 		interaction.reply({

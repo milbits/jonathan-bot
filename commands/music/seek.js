@@ -13,7 +13,8 @@ module.exports = {
 		const track = queue.currentTrack;
 		const time = timeToSeconds(`${interaction.options.getString("position")}`) * 1000;
 
-		if (isNaN(time) || time === "Infinity" || Number(time) < 0 || time >= track.durationMS) return interaction.reply("Enter a correct timestamp");
+		if (isNaN(time) || time === "Infinity" || Number(time) < 0 || time >= track.durationMS)
+			return interaction.reply("Enter a correct timestamp");
 
 		if (!interaction.member.voice.channel) return interaction.reply({ content: "Join a vc", ephemeral: true });
 

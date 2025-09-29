@@ -10,7 +10,8 @@ module.exports = {
 	execute(client, interaction) {
 		const queue = useQueue();
 
-		if (!interaction.member.voice.channel) return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
+		if (!interaction.member.voice.channel)
+			return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
 
 		if (interaction.guild.members.me.voice.channel && interaction.member.voice.channel.id !== interaction.guild.members.me.voice.channel.id)
 			return interaction.reply(`im used in <#${queue.channel.id}>`);

@@ -3,7 +3,8 @@ module.exports = {
 	name: "stop",
 	data: new SlashCommandBuilder().setName("stop").setDescription("Stops playback"),
 	execute(client, interaction) {
-		if (!interaction.member.voice.channel) return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
+		if (!interaction.member.voice.channel)
+			return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
 
 		if (interaction.guild.me.voice.channel && interaction.member.voice.channel.id !== interaction.guild.me.voice.channel.id)
 			return interaction.reply({

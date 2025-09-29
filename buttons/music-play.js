@@ -7,11 +7,11 @@ module.exports = {
 	async execute(client, interaction) {
 		const queue = useQueue(interaction.guild.id);
 
-		if (!queue || !queue.isPlaying()) return interaction.reply({ content: `❌ | theres no music currently playing`, ephemeral: true, components: [] });
-		if (!interaction.member.voice.channel) return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
+		if (!queue || !queue.isPlaying())
+			return interaction.reply({ content: `❌ | theres no music currently playing`, ephemeral: true, components: [] });
+		if (!interaction.member.voice.channel || interaction.guild.members.me.voice.channel && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId)
+			return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
 
-		if (interaction.guild.members.me.voice.channel && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId)
-			return interaction.reply({ content: `❌ | You are not on the same audio channel as me.`, ephemeral: true, components: [] });
 
 		let playing = !queue.node.isPaused();
 
@@ -22,7 +22,7 @@ module.exports = {
 		const playPauseButton = new ButtonBuilder()
 			.setCustomId("music-play")
 			.setEmoji(playing ? "<:play:1153663186973753364>" : "<:pause:1153663836180717568>")
-			.setStyle(playing ? "Primary" : "Secondary");
+			.setStyle(playing ? "Primary" : "Success");
 		const skipButton = new ButtonBuilder().setCustomId("music-skip").setEmoji("<:skip:1153667602791546900>").setStyle("Secondary");
 		const queueButton = new ButtonBuilder().setCustomId("music-queue").setEmoji("<:queue:1153660764100509706>").setStyle("Secondary");
 

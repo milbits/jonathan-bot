@@ -5,7 +5,7 @@ const { useQueue, QueueRepeatMode } = require("discord-player");
 module.exports = {
 	name: "queue",
 	category: "Music",
-	data: new SlashCommandBuilder().setName("queue").setDescription("shows the queue"),
+	data: new SlashCommandBuilder().setName("queue").setDescription("shows all upcoming songs"),
 	async execute(client, interaction) {
 		const queue = useQueue(interaction.guild.id);
 
@@ -14,14 +14,17 @@ module.exports = {
 		let loopMode = queue.repeatMode;
 		let maxSongs = queueLength > 50 ? 50 : queueLength;
 		let queueTracks = "`No songs in queue`";
-		loopMode = loopMode === QueueRepeatMode.TRACK ? ":repeat_one: Track" : loopMode === QueueRepeatMode.QUEUE ? "Queue" : ":arrow_forward: Off";
+		loopMode =
+			loopMode === QueueRepeatMode.TRACK ? ":repeat_one: Track" : loopMode === QueueRepeatMode.QUEUE ? "Queue" : ":arrow_forward: Off";
 		if (queueLength > 0) {
 			currQueue = queueLength > maxSongs ? currQueue.slice(0, maxSongs) : currQueue;
 			queueTracks = currQueue.map((track, idx) => `${++idx}. ${track.author} - ${track.toHyperlink()} | ${track.requestedBy}`).join("\n");
 			while (queueTracks.length > 1000) {
 				maxSongs--;
 				currQueue = queueLength > maxSongs ? currQueue.slice(0, maxSongs) : currQueue;
-				queueTracks = currQueue.map((track, idx) => `${++idx}.  ${track.author} - ${track.toHyperlink()} | ${track.requestedBy}`).join("\n");
+				queueTracks = currQueue
+					.map((track, idx) => `${++idx}.  ${track.author} - ${track.toHyperlink()} | ${track.requestedBy}`)
+					.join("\n");
 			}
 			if (queueLength > maxSongs) {
 				queueTracks += `\nand ${queueLength - maxSongs} more...`;

@@ -3,14 +3,20 @@ module.exports = {
 	name: "remove",
 	data: new SlashCommandBuilder()
 		.setName("remove")
-		.setDescription("Removes a song from the queue (prob doesnt work)")
+		.setDescription("Removes a song from the queue")
 		.addIntegerOption((option) => option.setName("song").setDescription("The song to remove (queue number)").setRequired(true)),
 	execute(client, interaction) {
-		if (queue.tracks.length < 2) return interaction.reply("There's nothing to remove");
+		const queue = useQueue();
 
-		if (isNaN(interaction.options.getInteger("song"))) return interaction.reply(`Invalid number.\nPlease use a queue number between 1 to ${queue.tracks.length - 1}`);
+		if (queue.tracks.length < 2) return interaction.reply("there's nothing to remove");
 
-		if (Number(interaction.options.getInteger("song")) === 0) return interaction.reply("Can't remove a song im already playing");
+		if (isNaN(interaction.options.getInteger("song")))
+			return interaction.reply(`use a queue number between 1 to ${queue.tracks.length - 1}\nuse /queue if you're confused`);
+
+		if (Number(interaction.options.getInteger("song")) === 0) {
+			queue.node.skip();
+			return interaction.reply("skipped song. ever heard of /skip? go try it");
+		}
 
 		if (
 			Number(interaction.options.getInteger("song")) >= queue.tracks.length ||
@@ -25,6 +31,5 @@ module.exports = {
 
 		interaction.reply(`Removed **${song.title}** from the Queue`);
 
-		//	interaction.reply("Not finished!")
 	},
 };

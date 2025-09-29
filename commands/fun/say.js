@@ -6,15 +6,15 @@ module.exports = {
 	botPerms: ["SEND_MESSAGES"],
 	data: new SlashCommandBuilder()
 		.setName("say")
-		.setDescription("cum")
+		.setDescription("let the bot say something. your message is logged")
 		.addStringOption((option) => option.setName("message").setDescription("the message to send").setRequired(true)),
 	execute(client, interaction) {
-		console.info(`say | ${interaction.member.user.id}: ${interaction.options.getString("message")}\nserv: ${interaction.guild.id}`);
+		console.info(`say | ${interaction.member.displayname}: ${interaction.options.getString("message")}\nserver: ${interaction.guild.id}`);
 		if (!interaction.options.getString("message"))
 			return interaction.reply({
 				embeds: [u],
 			});
 		interaction.channel.send(interaction.options.getString("message"));
-		interaction.reply({ content: "rawr", ephemeral: true });
+		interaction.reply({ content: "message sent", ephemeral: true });
 	},
 };

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js");
 const { useMainPlayer } = require("discord-player");
 const player = useMainPlayer();
 
@@ -11,6 +11,7 @@ module.exports = {
 		.addStringOption((option) => option.setName("song").setDescription("A url or title").setAutocomplete(true).setRequired(true)),
 	async autocomplete(client, interaction) {
 		const query = interaction.options.getString("song", true);
+		if (!query) return;
 		const searchResults = await player.search(query);
 
 		let response = [];
@@ -26,7 +27,9 @@ module.exports = {
 		});
 
 		if (!response || response.length === 0) {
-			return interaction.respond([{ name: "im a mysterious song please notice me :3", value: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }]);
+			return interaction.respond([
+				{ name: "i'm a mysterious song please notice me :3", value: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+			]);
 		}
 		return interaction.respond(response);
 	},
@@ -39,35 +42,24 @@ module.exports = {
 
 		const query = interaction.options.getString("song", true);
 
-		const { URL } = require("url");
-
-		const isValidUrl = (str) => {
-			try {
-				new URL(str);
-				return true;
-			} catch (err) {
-				return false;
-			}
-		};
-		var queryType = "auto";
-
 		const searchResult = await player.search(query, {
 			// Force youtube search
 			requestedBy: interaction.member,
-			searchEngine: queryType,
+			searchEngine: "auto",
 		});
 
 		const channel = interaction.member.voice.channel;
 
 		const track = searchResult.tracks[0];
 
-		var embed = new EmbedBuilder().setTitle("Play").setColor("DarkGreen");
+		var embed = new EmbedBuilder().setColor("DarkGreen");
 		try {
 			await player.play(channel, track, {
 				nodeOptions: {
 					leaveOnEmpty: true,
 					leaveOnEmptyCooldown: 300000,
 					skipOnNoStream: true,
+					smoothVolume: true,
 					metadata: {
 						interaction: interaction,
 						channel: interaction.channel,
@@ -78,10 +70,11 @@ module.exports = {
 				},
 			});
 
+
 			return interaction.editReply({
 				embeds: [
 					embed
-						.setDescription(`Added **${track.toHyperlink()}** by **${track.author}**\n Length: ${track.duration}`)
+						.setDescription(`Added **${track.toHyperlink()}** by **${track.author}**\n-# ${track.duration}`)
 						.setThumbnail(`${track.thumbnail}`),
 				],
 			});

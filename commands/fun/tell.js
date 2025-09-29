@@ -21,6 +21,6 @@ module.exports = {
 					.setColor(`${interaction.member.displayHexColor}`),
 			],
 		});
-		interaction.reply({ content: ":3", ephemeral: true });
+		interaction.reply({ content: ":3c", ephemeral: true });
 	},
 };

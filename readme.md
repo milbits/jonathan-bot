@@ -1,11 +1,11 @@
-shitty useless basic discord bot from like 2021
+basic music discord bot for friend servers
 
 create a .env file with the following content
 
 ```env
 TOKEN=<bot token here>
-ID=<bot id here>
-OWNER=<your id here>
+YT_COOKIE=<yt cookie> [this is optional]
+ID=<your id here>
 ```
 
 and then do `npm i` or whatever your package manager is (bun on top)

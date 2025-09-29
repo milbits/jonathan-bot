@@ -21,7 +21,7 @@ module.exports = {
 		),
 
 	execute(client, interaction) {
-		const queue = useQueue(interaction.guild.id);
+		const queue = useQueue();
 		const loopmode = interaction.options.getInteger("mode");
 
 		if (!interaction.member.voice.channel) return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true });

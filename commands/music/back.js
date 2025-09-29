@@ -8,6 +8,6 @@ module.exports = {
 		const history = useHistory(interaction.guild.id);
 		await history.previous();
 
-		interaction.reply(`Playing previous song`);
+		return interaction.reply(`Playing previous song`);
 	},
 };

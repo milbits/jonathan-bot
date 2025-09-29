@@ -7,7 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("penissize")
 		.setDescription("imagine small pp😂🤣😂🤣🤣🤣😂")
-		.addStringOption((option) => option.setName("target").setDescription("The target user").setRequired(false)),
+		.addStringOption((option) => option.setName("target").setDescription("The victim").setRequired(false)),
 	async execute(client, interaction) {
 		var pp = ["=", "==", "===", "====", "=====", "======", "=======", "========", "=========", "=========="];
 		var ppp = Math.floor(Math.random() * pp.length);

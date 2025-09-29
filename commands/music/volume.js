@@ -6,12 +6,13 @@ module.exports = {
 	category: "Music",
 	data: new SlashCommandBuilder()
 		.setName("volume")
-		.setDescription("Changes the volume")
+		.setDescription("Adjusts the volume (for everyone)")
 		.addIntegerOption((option) => option.setName("volume").setDescription("volume").setRequired(true).setMinValue(1).setMaxValue(200)),
 	async execute(client, interaction) {
 		const queue = useQueue();
 
-		if (!interaction.member.voice.channel) return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
+		if (!interaction.member.voice.channel)
+			return interaction.reply({ content: `please join <#${queue.channel.id}>`, ephemeral: true, components: [] });
 
 		if (!queue) return interaction.reply("Nothing is playing");
 

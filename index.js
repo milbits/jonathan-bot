@@ -34,7 +34,7 @@ player.extractors.register(YoutubeiExtractor, {
 		player_id: "0004de42",
 	},
 	//optional
- 	cookie: process.env.YT_COOKIE
+	cookie: process.env.YT_COOKIE,
 });
 
 exports.client = client;
@@ -48,13 +48,13 @@ const { ActionRowBuilder } = require("discord.js");
 
 player.events.on("playerStart", (queue, track) => {
 	let playing = queue.node.isPaused();
-	const backButton = new ButtonBuilder().setCustomId("music-back").setEmoji(client.back).setStyle("Secondary");
+
+	const backButton = new ButtonBuilder().setCustomId("music-back").setEmoji(client.back).setStyle("Primary");
 	const playPauseButton = new ButtonBuilder()
 		.setCustomId("music-play")
 		.setEmoji(playing ? `${client.play}` : client.resume)
-		.setStyle(playing ? "Primary" : "Secondary");
-	const skipButton = new ButtonBuilder().setCustomId("music-skip").setEmoji(client.skip).setStyle("Secondary");
-	//	const stopButton = new ButtonBuilder().setCustomId("music-stop").setEmoji("<:stop:1153670846724980806>").setStyle("Danger");
+		.setStyle(playing ? "Primary" : "Success");
+	const skipButton = new ButtonBuilder().setCustomId("music-skip").setEmoji(client.skip).setStyle("Primary");
 	//	const loopButton = new ButtonBuilder().setCustomId("music-loop").setEmoji("<:loop:1127601962444128336>").setStyle("Secondary");
 	const queueButton = new ButtonBuilder().setCustomId("music-queue").setEmoji(client.playlist).setStyle("Secondary");
 
@@ -65,7 +65,7 @@ player.events.on("playerStart", (queue, track) => {
 		.setDescription(`**${track.toHyperlink()}** by **${track.author}**\n-# ${track.duration}`)
 		.setThumbnail(`${track.thumbnail}`)
 		//	.setColor("Random")
-		.setFooter({ text: `Added by ${track.requestedBy.username}`, iconURL: `${track.requestedBy.displayAvatarURL()}` })
+		.setFooter({ text: `Added by ${track.requestedBy.displayName}`, iconURL: `${track.requestedBy.displayAvatarURL()}` })
 		.setColor(`${queue.metadata.interaction.member.displayHexColor}`);
 	queue.metadata.interaction.channel.send({ embeds: [embed], components: [musicButtonRow] });
 });
